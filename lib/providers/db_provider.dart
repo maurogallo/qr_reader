@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:path/path.dart' as p;
 
 import 'package:path_provider/path_provider.dart';
 
@@ -81,5 +82,64 @@ class DBProvider {
     return res.isNotEmpty
         ? res.map((s) => ScanModel.fromJson(s)).toList()
         : [];
+  }
+
+  Future<int> updateScan(ScanModel nuevoScan) async {
+    final db = await database;
+    final res = await db.update('Scans', nuevoScan.toJson(),
+        where: 'id = ?', whereArgs: [nuevoScan.id]);
+    return res;
+  }
+
+  Future<int> deleteScan(int id) async {
+    final db = await database;
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int> deleteAllScans() async {
+    final db = await database;
+    final res = await db.rawDelete('''
+      DELETE FROM Scans
+    ''');
+    return res;
+  }
+
+
+  Future<void> abrirCarpetaBaseDatos() async {
+    try {
+      // Asegurarse de que la base de datos esté inicializada
+      final db = await database;
+      final dbPath = db.path;
+      final directory = p.dirname(dbPath);
+      
+      print('=== INFORMACIÓN DE LA BASE DE DATOS ===');
+      print('Ruta completa: $dbPath');
+      print('Directorio: $directory');
+      print('Plataforma: ${Platform.operatingSystem}');
+      print('=====================================');
+      
+      if (Platform.isWindows) {
+        // Intentar múltiples formas de abrir en Windows
+        try {
+          await Process.run('explorer.exe', [directory]);
+          print('✅ Carpeta abierta exitosamente con explorer.exe');
+        } catch (e1) {
+          try {
+            await Process.run('start', [directory], runInShell: true);
+            print('✅ Carpeta abierta exitosamente con start');
+          } catch (e2) {
+            print('❌ Error al abrir carpeta: $e1, $e2');
+          }
+        }
+      } else if (Platform.isAndroid) {
+        print('📱 Para Android, usa ADB:');
+        print('adb shell "run-as com.example.qr_reader ls -la /data/user/0/com.example.qr_reader/app_flutter/"');
+      } else {
+        print('💻 Plataforma ${Platform.operatingSystem} detectada');
+      }
+    } catch (e) {
+      print('❌ Error general: $e');
+    }
   }
 }

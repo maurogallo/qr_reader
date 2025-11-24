@@ -29,6 +29,28 @@ class HomePage extends StatelessWidget {
               // Acción para eliminar el historial
             },
           ),
+          // Agregar botón para abrir carpeta de BD
+          IconButton(
+            icon: Icon(Icons.folder_open, color: Colors.white),
+            onPressed: () async {
+              await DBProvider.db.abrirCarpetaBaseDatos();
+              // Mostrar un snackbar con la información
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Revisa la consola para la ruta de la BD'),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+            },
+            tooltip: 'Abrir carpeta BD',
+          ),
+          IconButton(
+            icon: Icon(Icons.chat, color: Colors.white),
+            onPressed: () {
+              Navigator.pushNamed(context, 'grok_chat');
+            },
+            tooltip: 'Chat con Grok',
+          ),
         ],
       ),
 
@@ -49,21 +71,6 @@ class _HomePageBody extends StatelessWidget {
 
     // Cambiar para mostrar la página respectiva
     final currentIndex = uiProvider.selectedMenuOpt;
-
-    final nuevoScan = new ScanModel(valor: 'http://www.prueba.com');
-
-    //TODO: Temporal leer la base de datos
-    //DBProvider.db.nuevoScan(nuevoScan);
-    // DBProvider.db.getScanById(13).then((scan) {
-    //   if (kDebugMode) {
-    //     print(scan?.valor);
-    //   }
-    // });
-    DBProvider.db.getTodosLosScans().then((scans) {
-      if (kDebugMode) {
-        print(scans);
-      }
-    });
 
     switch (currentIndex) {
       case 0:
