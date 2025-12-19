@@ -44,13 +44,13 @@ class HomePage extends StatelessWidget {
             },
             tooltip: 'Abrir carpeta BD',
           ),
-          IconButton(
-            icon: Icon(Icons.chat, color: Colors.white),
-            onPressed: () {
-              Navigator.pushNamed(context, 'grok_chat');
-            },
-            tooltip: 'Chat con Grok',
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.chat, color: Colors.white),
+          //   onPressed: () {
+          //     Navigator.pushNamed(context, 'grok_chat');
+          //   },
+          //   tooltip: 'Chat con Grok',
+          // ),
         ],
       ),
 

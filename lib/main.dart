@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_reader/providers/scan_list_provider.dart';
 import 'package:qr_reader/providers/ui_provider.dart';
-import 'package:qr_reader/providers/grok_provider.dart';
+
 
 import 'package:qr_reader/pages/home_page.dart';
 import 'package:qr_reader/pages/mapa_page.dart';
-import 'package:qr_reader/pages/grok_chat_page.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         routes: {
           'home': (_) => HomePage(),
           'mapa': (_) => MapaPage(),
-          'grok_chat': (_) => GrokChatPage(),
+          //'grok_chat': (_) => GrokChatPage(),
         },
         theme: ThemeData(
           primaryColor: Colors.deepPurple,
