@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:qr_reader/providers/db_provider.dart';
+import 'package:qr_reader/providers/scan_list_provider.dart';
 import 'package:qr_reader/providers/ui_provider.dart';
 
 import 'package:qr_reader/pages/direcciones_page.dart';
@@ -27,6 +28,8 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.delete_forever, color: Colors.white),
             onPressed: () {
               // Acción para eliminar el historial
+              Provider.of<ScanListProvider>(context, listen: false)
+                  .borrarTodos();
             },
           ),
           // Agregar botón para abrir carpeta de BD
@@ -72,10 +75,15 @@ class _HomePageBody extends StatelessWidget {
     // Cambiar para mostrar la página respectiva
     final currentIndex = uiProvider.selectedMenuOpt;
 
+    // Usa el ScanListProvider para cargar los scans
+    final scanListProvider = Provider.of<ScanListProvider>(context, listen: false);
+
     switch (currentIndex) {
       case 0:
+        scanListProvider.cargarScanPorTipo('geo');
         return MapasPage();
       case 1:
+        scanListProvider.cargarScanPorTipo('http');
         return DireccionesPage();
       default:
         return MapasPage();

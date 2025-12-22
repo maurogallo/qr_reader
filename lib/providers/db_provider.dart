@@ -135,6 +135,9 @@ class DBProvider {
       } else if (Platform.isAndroid) {
         print('📱 Para Android, usa ADB:');
         print('adb shell "run-as com.example.qr_reader ls -la /data/user/0/com.example.qr_reader/app_flutter/"');
+        print('📱 Para Android, ejecuta este comando en tu terminal para extraer la BD:');
+        // Nota: Asegúrate de que 'com.example.qr_reader' coincida con el applicationId en tu build.gradle
+        print('adb exec-out run-as com.example.qr_reader cat app_flutter/ScansDB.db > ScansDB.db');
       } else {
         print('💻 Plataforma ${Platform.operatingSystem} detectada');
       }
